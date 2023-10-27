@@ -1,16 +1,13 @@
 package com.coroutines
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.newSingleThreadContext
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
@@ -22,30 +19,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        /* Here everything run sequentially */
-        /* runBlocking{delay(1000)} is exactly same as Thread.sleep(1000) */
-        /*
-        Log.d(TAG, "Before of runBlocking")
-        runBlocking {
-            Log.d(TAG, "Starting of runBlocking")
-            delay(3000L)
-            Log.d(TAG, "Ending of runBlocking")
-        }
-        Log.d(TAG, "After of runBlocking")
-        */
+        val tv = findViewById<TextView>(R.id.textView)
 
-
-
-        runBlocking {
-            delay(3000L)
-            Log.d(TAG, "Currently in ${Thread.currentThread().name}")
-            launch(Dispatchers.IO) {
-                Log.d(TAG, "Currently in ${Thread.currentThread().name}")
+        GlobalScope.launch {
+            for (i in 1..100){
+                delay(1000)
+                withContext(Dispatchers.Main){
+                    tv.text = i.toString()
+                }
             }
-            Log.d(TAG, "Currently in ${Thread.currentThread().name}")
         }
-
-        Log.d(TAG, "After runBlocking")
     }
 
 }
