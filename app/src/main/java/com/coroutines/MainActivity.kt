@@ -3,11 +3,14 @@ package com.coroutines
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
@@ -17,12 +20,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val tv = findViewById<TextView>(R.id.textView)
+
         /* Start a coroutine */
-        GlobalScope.launch(Dispatchers.Default) {
+        GlobalScope.launch(Dispatchers.IO) {  /* Not in Main thread */
             delay(3000L)
             val networkResponse = netWorkCall()
-            Log.d(TAG, networkResponse)
+            Log.d(TAG, "Starting coroutine in thread ${Thread.currentThread().name}")
+            withContext(Dispatchers.Main){ /* Change context to main thread */
+                Log.d(TAG, "Setting coroutine in thread ${Thread.currentThread().name}")
+                tv.text = networkResponse
+            }
         }
+
         Log.d(TAG, "Hello, from ${Thread.currentThread().name}")
     }
 
