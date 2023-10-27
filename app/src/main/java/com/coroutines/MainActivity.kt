@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         /* Here everything run sequentially */
         /* runBlocking{delay(1000)} is exactly same as Thread.sleep(1000) */
+        /*
         Log.d(TAG, "Before of runBlocking")
         runBlocking {
             Log.d(TAG, "Starting of runBlocking")
@@ -31,6 +32,20 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "Ending of runBlocking")
         }
         Log.d(TAG, "After of runBlocking")
+        */
+
+
+
+        runBlocking {
+            delay(3000L)
+            Log.d(TAG, "Currently in ${Thread.currentThread().name}")
+            launch(Dispatchers.IO) {
+                Log.d(TAG, "Currently in ${Thread.currentThread().name}")
+            }
+            Log.d(TAG, "Currently in ${Thread.currentThread().name}")
+        }
+
+        Log.d(TAG, "After runBlocking")
     }
 
 }
