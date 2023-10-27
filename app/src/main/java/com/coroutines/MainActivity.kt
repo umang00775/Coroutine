@@ -10,6 +10,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
@@ -20,24 +21,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val tv = findViewById<TextView>(R.id.textView)
 
-        /* Start a coroutine */
-        GlobalScope.launch(Dispatchers.IO) {  /* Not in Main thread */
+        /* Here everything run sequentially */
+        /* runBlocking{delay(1000)} is exactly same as Thread.sleep(1000) */
+        Log.d(TAG, "Before of runBlocking")
+        runBlocking {
+            Log.d(TAG, "Starting of runBlocking")
             delay(3000L)
-            val networkResponse = netWorkCall()
-            Log.d(TAG, "Starting coroutine in thread ${Thread.currentThread().name}")
-            withContext(Dispatchers.Main){ /* Change context to main thread */
-                Log.d(TAG, "Setting coroutine in thread ${Thread.currentThread().name}")
-                tv.text = networkResponse
-            }
+            Log.d(TAG, "Ending of runBlocking")
         }
-
-        Log.d(TAG, "Hello, from ${Thread.currentThread().name}")
+        Log.d(TAG, "After of runBlocking")
     }
 
-    suspend fun netWorkCall(): String{
-        delay(3000)
-        return "This is response from the network :)"
-    }
 }
