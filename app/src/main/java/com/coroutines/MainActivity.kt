@@ -17,11 +17,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         /* Start a coroutine */
-        /* This is not the best way to start a coroutine */
         GlobalScope.launch {
-            delay(3000L) /* Pause the thread for 3 seconds */
-            Log.d(TAG, "Hello, from ${Thread.currentThread().name}")
+            delay(3000L)
+            val networkResponse = netWorkCall()
+            Log.d(TAG, networkResponse)
         }
         Log.d(TAG, "Hello, from ${Thread.currentThread().name}")
+    }
+
+    suspend fun netWorkCall(): String{
+        delay(3000)
+        return "This is response from the network :)"
     }
 }
