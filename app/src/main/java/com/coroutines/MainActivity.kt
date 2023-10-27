@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -17,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         /* Start a coroutine */
-        GlobalScope.launch {
+        GlobalScope.launch(Dispatchers.Default) {
             delay(3000L)
             val networkResponse = netWorkCall()
             Log.d(TAG, networkResponse)
