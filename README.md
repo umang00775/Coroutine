@@ -129,6 +129,14 @@ val time = measureTimeMillis {...}
 --> Async functions returns Deferred<Datatype>
 --> So, if we want wait until we get a result, we should use await() method.
 
+-----------------------------------------------------------------------------------------------
+
+## LifeCycleScope and ViewModelScope
+
+To implement this, add these dependencies:
+val arch_version = '2.2.0-alpha01'
+implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$arch_version")
+implementation ("androidx.lifecycle:lifecycle-runtime-ktx:$arch_version")
 
 
 
