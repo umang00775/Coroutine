@@ -34,20 +34,20 @@ coroutine will cancelled when main thread finishes.
 
 delay() must be called from Coroutine or another suspend function.
 
-We cannot call suspend function from outside of Coroutine. (In this code Coroutine --> Globalscope.launch{...})
+We cannot call suspend function from outside of Coroutine. (In this code Coroutine --> GlobalScope.launch{...})
 
 --------------------------------------------------------------------------------------------
 
-For context we need to pass Dispatcher in launch (Globalscope.launch(Dispatchers.Main or IO or Something){...})
+For context we need to pass Dispatcher in launch (GlobalScope.launch(Dispatchers.Main or IO or Something){...})
 Dispatchers.Main --> Starts coroutine in main thread, Useful to change UI on the main thread
-Dispatchers.IO --> Usefull in all kind of data operations
+Dispatchers.IO --> Usefully in all kind of data operations
 Dispatchers.Default --> Used in complex and long running calculations (eg. List of some 10k elements)
-Dispatchers.Unconfined --> Use if we are unconfied :
+Dispatchers.Unconfined --> Use if we are unconfined :
 
 OR 
 
 We can start our new thread by
-Globalscope.launch(newSingleThreadContext("{name}")){...}
+GlobalScope.launch(newSingleThreadContext("{name}")){...}
 
 -------------------------------------------------------------------------------------------
 
@@ -78,12 +78,30 @@ GlobalScope.launch(Dispatchers.IO) {  /* Not in Main thread */
 We can launch a coroutine in runBlocking asynchronously
 runBlocking {
     /* Main Thread */
-    launch(Dispathers.IO) {
+    launch(Dispatchers.IO) {
         /* Another Asynchronous thread */
     }
     /* Main Thread */
 }
 
 --> We can use multiple launch{...} inside a runBlocking coroutine.
+
+-----------------------------------------------------------------------------------------------
+
+Coroutine returns a job.
+We can store this job into a variable, and can wait until coroutine completes, using job.join() function.
+--> We can't directly do this, because join() is a suspend function, we can use it inside runBlocking :)
+
+--> We can cancel the job using, job.cancel() method.
+
+
+-----------------------------------------------------------------------------------------------
+
+--> In coroutine we can use repeat(how many times){...} method to repeat something.
+Eg. 
+GlobalScope.launch{
+    repeat(5){...}
+}
+
 
 

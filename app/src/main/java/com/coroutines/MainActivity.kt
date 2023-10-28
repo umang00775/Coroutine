@@ -1,6 +1,7 @@
 package com.coroutines
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -8,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
@@ -19,16 +21,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val tv = findViewById<TextView>(R.id.textView)
-
-        GlobalScope.launch {
-            for (i in 1..100){
-                delay(1000)
-                withContext(Dispatchers.Main){
-                    tv.text = i.toString()
-                }
+        val job = GlobalScope.launch(Dispatchers.Default) {
+            repeat(5){
+                Log.d(TAG, "Running ${Thread.currentThread().name}")
+                delay(1000L)
             }
         }
-    }
 
+        runBlocking {
+            job.join()
+            Log.d(TAG, "Running ${Thread.currentThread().name}")
+        }
+    }
 }
