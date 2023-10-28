@@ -95,6 +95,13 @@ We can store this job into a variable, and can wait until coroutine completes, u
 --> We can cancel the job using, job.cancel() method.
 
 
+--> To check if our coroutine is active or not, we can use if(isActive){...} statement inside a coroutine.
+Eg. GlobalScope.launch {... if(isActive){...} ...}
+
+
+--> If we want to cancel a coroutine on time out we can use withTimeout(timeMS){...} inside a coroutine.
+
+
 -----------------------------------------------------------------------------------------------
 
 --> In coroutine we can use repeat(how many times){...} method to repeat something.
