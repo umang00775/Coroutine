@@ -134,7 +134,7 @@ val time = measureTimeMillis {...}
 ## LifeCycleScope and ViewModelScope
 
 To implement this, add these dependencies:
-val arch_version = '2.2.0-alpha01'
+val arch_version = '2.6.2'
 implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$arch_version")
 implementation ("androidx.lifecycle:lifecycle-runtime-ktx:$arch_version")
 
