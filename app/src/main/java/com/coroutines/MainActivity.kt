@@ -1,10 +1,13 @@
 package com.coroutines
 
+import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings.Global
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -23,67 +26,36 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val button = findViewById<Button>(R.id.button)
 
-
-        /* This will take 6 seconds */
-        /*
-        GlobalScope.launch {
-            val time = measureTimeMillis {
-                val response1 = networkCall1()
-                val response2 = networkCall2()
-                Log.d(TAG, response1)
-                Log.d(TAG, response2)
+        button.setOnClickListener {
+            /* This will run while the app is alive, which can cause a memory leaks */
+            /* Hence we use lifecycle for this, It will run while the Activity is alive */
+            GlobalScope.launch {
+                /* This will continue running even we finish this and start another activity */
+                while (true){
+                    delay(1000L)
+                    Log.d(TAG, "Still running ${Thread.currentThread().name}")
+                }
             }
-            Log.d(TAG, "$time")
-        }
-        */
 
-
-        /* This will take 3 seconds for the same operations as above */
-        /* This is one the way to achieve parallelism */
-        /*
-        GlobalScope.launch {
-            val time = measureTimeMillis {
-                var response1: String? = null
-                var response2: String? = null
-
-                val job1 = launch { response1 = networkCall1() }
-                val job2 = launch { response2 = networkCall1() }
-
-                job1.join()
-                job2.join()
-
-                Log.d(TAG, "$response1")
-                Log.d(TAG, "$response2")
+            /* This will run, only when this activity is alive */
+            lifecycleScope.launch {
+                while (true){
+                    delay(1000L)
+                    Log.d(TAG, "Running ${Thread.currentThread().name}")
+                }
             }
-            Log.d(TAG, "$time")
-        }
-        */
 
+            GlobalScope.launch {
+                delay(5000L)
+                Intent(this@MainActivity, SecondActivity::class.java).also {
+                    startActivity(it)
+                    finish()  /* Even after finish the upper while loop continues to run */
+                }
 
-        /* Best way :) */
-        /* Also takes 3 seconds instead of 6 seconds :) */
-        GlobalScope.launch {
-            val time = measureTimeMillis {
-                val res1 = async { networkCall1() }
-                val res2 = async { networkCall2() }
-                Log.d(TAG, res1.await())
-                Log.d(TAG, res2.await())
             }
-            Log.d(TAG, "$time")
         }
 
-
-
-    }
-
-    private suspend fun networkCall1(): String{
-        delay(3000L)
-        return "Response from server - 1"
-    }
-
-    private suspend fun networkCall2(): String {
-        delay(3000L)
-        return "Response from server - 2"
     }
 }

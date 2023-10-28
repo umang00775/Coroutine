@@ -50,7 +50,7 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
 
-    val arch_version = "2.6.2"
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$arch_version")
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:$arch_version")
+    val archVersion = "2.6.2"
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$archVersion")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:$archVersion")
 }

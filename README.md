@@ -139,5 +139,12 @@ implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$arch_version")
 implementation ("androidx.lifecycle:lifecycle-runtime-ktx:$arch_version")
 
 
+GlobalScope.launch{...} will run even if we change the activity (If code inside coroutine is not finished)
+--> This can cause a memory leak
+--> For this issue we use lifecycleScope.launch{...} (And we have to write finish() after creating intent for next activity)
+
+-------------------------------------------------------------------------------------------------
+
+
 
 
