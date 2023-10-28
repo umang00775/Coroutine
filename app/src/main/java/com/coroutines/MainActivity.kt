@@ -22,15 +22,20 @@ class MainActivity : AppCompatActivity() {
 
 
         val job = GlobalScope.launch(Dispatchers.Default) {
-            repeat(5){
-                Log.d(TAG, "Running ${Thread.currentThread().name}")
-                delay(1000L)
+            for (i in 30..40){
+                Log.d(TAG, "Fibonacci for $i = ${fib(i)}") // Ex. of fibonacci because it takes much time
             }
         }
 
         runBlocking {
-            job.join()
+            delay(3000L)
+            job.cancel()
             Log.d(TAG, "Running ${Thread.currentThread().name}")
         }
+    }
+
+    fun fib(num: Int): Int{
+        if (num <= 1) return num
+        return fib(num-1) + fib(num-2)
     }
 }
