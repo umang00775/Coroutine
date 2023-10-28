@@ -7,6 +7,7 @@ A thread describes in which context this sequence of instructions should be exec
 
 # Why threading is important for android apps?
 --> In normal app, all the programs are generally executed in a single thread (main thread).
+
 --> We need it for complex calculations, network calls, database operations, etc.
 
 
@@ -14,7 +15,9 @@ A thread describes in which context this sequence of instructions should be exec
 
 # Coroutines vs Threads
 --> Coroutines executed within a thread.
+
 --> Coroutines are suspendable, but thread are not.
+
 --> Coroutines cannot switch context.
  
 
@@ -39,9 +42,13 @@ We cannot call suspend function from outside of Coroutine. (In this code Corouti
 --------------------------------------------------------------------------------------------
 
 For context we need to pass Dispatcher in launch (GlobalScope.launch(Dispatchers.Main or IO or Something){...})
+
 Dispatchers.Main --> Starts coroutine in main thread, Useful to change UI on the main thread
+
 Dispatchers.IO --> Usefully in all kind of data operations
+
 Dispatchers.Default --> Used in complex and long running calculations (eg. List of some 10k elements)
+
 Dispatchers.Unconfined --> Use if we are unconfined :
 
 OR 
