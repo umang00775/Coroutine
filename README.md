@@ -119,6 +119,9 @@ val time = measureTimeMillis {...}
 
 ------------------------------------------------------------------------------------------------
 
+--> Async functions returns Deferred<Datatype>
+--> So, if we want wait until we get a result, we should use await() method.
+
 
 
 
