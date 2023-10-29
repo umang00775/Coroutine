@@ -54,5 +54,6 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$archVersion")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:$archVersion")
 
+    implementation("com.google.firebase:firebase-firestore-ktx:24.9.1")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
 }
