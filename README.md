@@ -146,5 +146,16 @@ GlobalScope.launch{...} will run even if we change the activity (If code inside 
 -------------------------------------------------------------------------------------------------
 
 
+# Coroutines in firebase fire-store
+
+--> First, add this dependency:
+implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
+
+
+
+
+
+
+
 
 
