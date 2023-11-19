@@ -86,4 +86,10 @@ runBlocking {
 
 --> We can use multiple launch{...} inside a runBlocking coroutine.
 
+--------------------------------------------------------------------------------------------------
 
+# If we have to use coroutine inside a RecyclerViewAdapter (Inside onBindVH) then use CoroutineScope:
+
+CoroutineScope(Dispatchers.IO).launch{
+   Picasso.get().load(messageCard.imageUrl).into(holder.dp)
+}
